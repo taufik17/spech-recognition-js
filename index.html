@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PSD - Spech Recognition</title>
+<link rel="stylesheet" type="text/css" href="font-awesome.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container pt-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 align="center">PSD - Spech Recognition </h4>
+      </div>
+      <div class="card-body">
+          <div id="result"></div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" onclick="if (!window.__cfRLUnblockHandlers) return false; startConverting();" data-cf-modified-cb23277442996be1c8b3d3a4-=""><i class="fa fa-microphone"></i></button>
+        <p>Team : </p>
+        1. Brian Adam Sembiring <br>
+        2. Muhammad Wahyudi <br>
+        3. Rizki Juliansyah <br>
+        4. Taufik Agung Santoso
+      </div>
+    </div>
+  </div>
+
+  <script type="cb23277442996be1c8b3d3a4-text/javascript">
+
+			var r = document.getElementById('result');
+
+			function startConverting () {
+				if('webkitSpeechRecognition' in window){
+					var speechRecognizer = new webkitSpeechRecognition();
+					speechRecognizer.continuous = true;
+					speechRecognizer.interimResults = true;
+					speechRecognizer.lang = 'id';
+					speechRecognizer.start();
+
+					var finalTranscripts = '';
+
+					speechRecognizer.onresult = function(event){
+						var interimTranscripts = '';
+						for(var i = event.resultIndex; i < event.results.length; i++){
+							var transcript = event.results[i][0].transcript;
+							transcript.replace("\n", "<br>");
+							if(event.results[i].isFinal){
+								finalTranscripts += transcript;
+							}else{
+								interimTranscripts += transcript;
+							}
+						}
+						r.innerHTML = finalTranscripts + '<span style="color:#999">' + interimTranscripts + '</span>';
+					};
+					speechRecognizer.onerror = function (event) {
+					};
+				}else{
+					r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
+				}
+			}
+	</script>
+  <script src="rocket-loader.min.js" data-cf-settings="cb23277442996be1c8b3d3a4-|49" defer=""></script>
+  </body>
+</html>
